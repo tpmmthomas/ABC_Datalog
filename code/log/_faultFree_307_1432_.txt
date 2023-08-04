@@ -1,0 +1,39 @@
+date(2023,7,30)
+----------------------------------------------------------------------------------
+Theory size: 5
+Faults Number: 0,0
+Cost Limit is: 50
+RoundLimit is: 0
+Running time: 0 ms.
+Heuristics applied:[]
+The protected item(s):[[arity(eq)],[eq]]
+Total Solution number is: 1
+Remaining semi-repaired theories: 0
+----------------------------------------------------------------------------------
+The original theory : 
+[+eq(\x,\z),-mum(\x,\y,\w),-mum(\z,\y,\w)].
+[+eq(\x,\z),-mum2(\x,\y,\w),-mum2(\z,\y,\w)].
+[+mum(anna,victor,step)].
+[+mum(lily,tina,birth)].
+[+mum(lily,victor,step)].
+
+The true set:
+[]
+The false set: 
+eq(anna,lily).
+eq(lily,anna).
+
+All of 1 sorted repair plans are from: 
+
+------------------ Solution No. 1 as below------------------
+Repair plans found at Round 0 :
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y,\w),-mum(\z,\y,\w)].
+[+eq(\x,\z),-mum2(\x,\y,\w),-mum2(\z,\y,\w)].
+[+mum(anna,victor,step)].
+[+mum(lily,tina,birth)].
+[+mum(lily,victor,step)].
+
+Solutions are found at rounds:[0]

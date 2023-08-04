@@ -1,0 +1,12 @@
+date(2023,7,30)
+----------------------------------------------------------------------------------
+Theory size: 4
+Faults Number: 0,2
+Cost Limit is: 50
+RoundLimit is: 0
+Running time: 31 ms.
+Heuristics applied:[]
+The protected item(s):[[arity(eq)],[eq]]
+Total Solution number is: 0
+Remaining semi-repaired theories: 0
+----------------------------------------------------------------------------------

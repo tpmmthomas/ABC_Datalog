@@ -1,0 +1,68 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[mum,[diana],[william]]],[+[mum,[kate],[george]]]]
+[+[mum,[diana],[william]]]
+[+[mum,[kate],[george]]]
+
+
+---------SufGoals is------
+[]
+---------InsufGoals is------
+[([-[female,[kate]]],[[([-[female,[kate]]],[],[],[-[female,[kate]]],[0,0])]])]
+---------InComps are------
+
+---------Violations are------
+
+--------- Start repInsInc round: 1
+
+--------Start unblocking 1 based on evidences  ------
+
+-- Unresolvables and ProofCur is :
+[-[female,[kate]]]
+[([-[female,[kate]]],[],[],[-[female,[kate]]],[0,0])]
+
+--Deleting unprovable preconditions:
+[-[female,[kate]]]
+
+--Reformation: Unresolvables:
+[-[female,[kate]]]
+
+Reformation: targeted evidence
+[female,[kate]]
+--------Reformation Candidates------
+[([+[mum,[kate],[george]]],[+[mum,[kate],[george]]],(predicate,[[george]]),1,[],[([+[mum,[kate],[george]]],[],[],[+[mum,[kate],[george]]],[0,0])])]
+---------------Axiom is 1  [+[mum,[kate],[george]]]
+---------------Mismatches is 1  predicate,[[george]]
+--Unblocking 1: RepPlanS:
+[merge(mum,female,[[kate]],dec)]
+[+[mum,[diana],[william]]]
+[+[mum,[kate],[george]]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[female,[kate]]])]
+[+[female,[kate]]]
+
+
+--------Start unblocking 2 by adding a rule ------
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[female,vble(z)],-[mum,vble(z),[george]]])]
+[+[female,vble(z)],-[mum,vble(z),[george]]]
+[+[mum,[kate],[george]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[female,vble(z)],-[mum,vble(z),[george]]])]
+[+[female,vble(z)],-[mum,vble(z),[george]]]
+[+[mum,[kate],[george]]]
+
+
+--------Start unblocking 3: by Analogical Abduction for ------
+[-[female,[kate]]]
+
+******** No rules are useful, Analogy fails.
+
+-- The single unresolvable subgoal. is :
+[[-[female,[kate]]]]

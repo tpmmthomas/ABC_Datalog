@@ -1,7 +1,6 @@
-:- working_directory(_, '../code').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
-theoryName(capOfh).
 
 axiom([+cap_of(london,britain)]).
 axiom([+cap_of(edinburgh,britain)]).

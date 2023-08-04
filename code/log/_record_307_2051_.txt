@@ -1,0 +1,201 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[p1,vble(x),vble(y)],-[p2,vble(x)],-[p3,vble(y)]],[+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]],[+[p3,[b]]],[+[p4,[a]]]]
+[+[p1,vble(x),vble(y)],-[p2,vble(x)],-[p3,vble(y)]]
+[+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]]
+[+[p3,[b]]]
+[+[p4,[a]]]
+
+
+---------SufGoals is------
+[]
+---------InsufGoals is------
+[([-[p1,[a],[b]]],[[([-[p1,[a],[b]]],[+[p1,vble(x),vble(y)],-[p2,vble(x)],-[p3,vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[p2,[a]],-[p3,[b]]],[1,0]),([-[p2,[a]],-[p3,[b]]],[+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]],[[a]/vble(z)],[-[p3,[a]],-[p4,[a]],-[p3,[b]]],[2,0])]])]
+---------InComps are------
+
+---------Violations are------
+
+--------- Start repInsInc round: 1
+
+--------Start unblocking 1 based on evidences  ------
+
+-- Unresolvables and ProofCur is :
+[-[p1,[a],[b]]]
+[([-[p1,[a],[b]]],[+[p1,vble(x),vble(y)],-[p2,vble(x)],-[p3,vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[p2,[a]],-[p3,[b]]],[1,0]),([-[p2,[a]],-[p3,[b]]],[+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]],[[a]/vble(z)],[-[p3,[a]],-[p4,[a]],-[p3,[b]]],[2,0])]
+
+--Deleting unprovable preconditions:
+[-[p1,[a],[b]]]
+
+--Reformation: Unresolvables:
+[-[p1,[a],[b]]]
+
+Reformation: targeted evidence
+[p1,[a],[b]]
+--------Reformation Candidates------
+[([+[p4,[a]]],[+[p4,[a]]],(predicate,[[b]]),1,[],[([+[p4,[a]]],[],[],[+[p4,[a]]],[0,0])])]
+---------------Axiom is 1  [+[p4,[a]]]
+---------------Mismatches is 1  predicate,[[b]]
+--Unblocking 1: RepPlanS:
+[merge(p4,p1,[[b]],inc)]
+[+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]]
+[+[p4,[a]]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[p1,[a],[b]]])]
+[+[p1,[a],[b]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[p2,[a]]]
+[([-[p3,[b]]],[+[p3,[b]]],[],[],[0,0]),([-[p1,[a],[b]]],[+[p1,vble(x),vble(y)],-[p2,vble(x)],-[p3,vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[p2,[a]],-[p3,[b]]],[1,0]),([-[p2,[a]],-[p3,[b]]],[+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]],[[a]/vble(z)],[-[p3,[a]],-[p4,[a]],-[p3,[b]]],[2,0])]
+
+--Deleting unprovable preconditions:
+[-[p2,[a]]]
+
+--------Finish generating repair plan of deleting the unprovable precondition------
+dele_pre([([+[p1,vble(x),vble(y)],-[p2,vble(x)],-[p3,vble(y)]],[+[p1,vble(x),vble(y)],-[p3,vble(y)]])])
+--Unblocking 1: RepPlanS:
+[dele_pre([([+[p1,vble(x),vble(y)],-[p2,vble(x)],-[p3,vble(y)]],[+[p1,vble(x),vble(y)],-[p3,vble(y)]])])]
+[+[p1,vble(x),vble(y)],-[p2,vble(x)],-[p3,vble(y)]]
+
+
+--Reformation: Unresolvables:
+[-[p2,[a]]]
+
+Reformation: targeted evidence
+[p2,[a]]
+--------Reformation Candidates------
+[([+[p4,[a]]],[+[p4,[a]]],(predicate,[]),0,[],[([+[p4,[a]]],[],[],[+[p4,[a]]],[0,0])])]
+---------------Axiom is 1  [+[p4,[a]]]
+---------------Mismatches is 1  predicate,[]
+--Unblocking 1: RepPlanS:
+[merge(p4,p2,[[a]],equ)]
+[+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]]
+[+[p4,[a]]]
+
+
+--Unblocking 1: RepPlanS:
+[rename(+p4,p2,[+[p4,[a]]],[+[p2,[a]]])]
+[+[p4,[a]]]
+
+
+--Unblocking 1: RepPlanS:
+[merge(p2,p4,[[a]],equ)]
+[+[p1,vble(x),vble(y)],-[p2,vble(x)],-[p3,vble(y)]]
+[+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]]
+
+
+--Unblocking 1: RepPlanS:
+[rename(-p2,p4,[+[p1,vble(x),vble(y)],-[p2,vble(x)],-[p3,vble(y)]],[+[p1,vble(x),vble(y)],-[p4,vble(x)],-[p3,vble(y)]])]
+[+[p1,vble(x),vble(y)],-[p2,vble(x)],-[p3,vble(y)]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[p2,[a]]])]
+[+[p2,[a]]]
+
+
+-- Unresolvables and ProofCur is :
+[-[p3,[a]]]
+[([-[p3,[b]]],[+[p3,[b]]],[],[],[0,0]),([-[p4,[a]]],[+[p4,[a]]],[],[],[0,0]),([-[p1,[a],[b]]],[+[p1,vble(x),vble(y)],-[p2,vble(x)],-[p3,vble(y)]],[[a]/vble(x),[b]/vble(y)],[-[p2,[a]],-[p3,[b]]],[1,0]),([-[p2,[a]],-[p3,[b]]],[+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]],[[a]/vble(z)],[-[p3,[a]],-[p4,[a]],-[p3,[b]]],[2,0])]
+
+--Deleting unprovable preconditions:
+[-[p3,[a]]]
+
+--------Finish generating repair plan of deleting the unprovable precondition------
+dele_pre([([+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]],[+[p2,vble(z)],-[p4,vble(z)]])])
+--Unblocking 1: RepPlanS:
+[dele_pre([([+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]],[+[p2,vble(z)],-[p4,vble(z)]])])]
+[+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]]
+
+
+--Reformation: Unresolvables:
+[-[p3,[a]]]
+
+Reformation: targeted evidence
+[p3,[a]]
+--------Reformation Candidates------
+[([+[p3,[b]]],[+[p3,[b]]],[([a],[b])],1,[[([a],[b])]],[([+[p3,[b]]],[],[],[+[p3,[b]]],[0,0])])]
+---------------Axiom is 1  [+[p3,[b]]]
+---------------Mismatches is 1  [([a],[b])]
+--renameArgs: Mismatches:
+[([a],[b])]
+[[arity(p1)],[p1]]
+
+--renameArgs: RepPlanS:
+rename([([b],[a],[+[p3,[b]]])])
+
+--renameArgs: TargCls:
+[[+[p3,[b]]]]
+
+--Unblocking 1: RepPlanS:
+[rename([([b],[a],[+[p3,[b]]])])]
+[+[p3,[b]]]
+
+
+--renameArgs: Mismatches:
+[([a],[b])]
+[[arity(p1)],[p1]]
+
+--------Reformation Candidates------
+[([+[p4,[a]]],[+[p4,[a]]],(predicate,[]),0,[],[([+[p4,[a]]],[],[],[+[p4,[a]]],[0,0])])]
+---------------Axiom is 1  [+[p4,[a]]]
+---------------Mismatches is 1  predicate,[]
+--Unblocking 1: RepPlanS:
+[merge(p4,p3,[[a]],equ)]
+[+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]]
+[+[p4,[a]]]
+
+
+--Unblocking 1: RepPlanS:
+[rename(+p4,p3,[+[p4,[a]]],[+[p3,[a]]])]
+[+[p4,[a]]]
+
+
+--Unblocking 1: RepPlanS:
+[merge(p3,p4,[[a]],equ)]
+[+[p1,vble(x),vble(y)],-[p2,vble(x)],-[p3,vble(y)]]
+[+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]]
+[+[p3,[b]]]
+
+
+--Unblocking 1: RepPlanS:
+[rename(-p3,p4,[+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]],[+[p2,vble(z)],-[p4,vble(z)],-[p4,vble(z)]])]
+[+[p2,vble(z)],-[p3,vble(z)],-[p4,vble(z)]]
+
+
+--Unblocking 1: RepPlanS:
+[expand([+[p3,[a]]])]
+[+[p3,[a]]]
+
+
+--------Start unblocking 2 by adding a rule ------
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[p1,[a],vble(z)],-[p3,vble(z)]])]
+[+[p1,[a],vble(z)],-[p3,vble(z)]]
+[+[p3,[b]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[p1,vble(z),[b]],-[p4,vble(z)]])]
+[+[p1,vble(z),[b]],-[p4,vble(z)]]
+[+[p4,[a]]]
+
+
+--Unblocking 2: RepPlanS/CLE
+[expand([+[p1,vble(z),vble(y)],-[p3,vble(y)],-[p4,vble(z)]])]
+[+[p1,vble(z),vble(y)],-[p3,vble(y)],-[p4,vble(z)]]
+[+[p3,[b]]]
+[+[p4,[a]]]
+
+
+--------Start unblocking 3: by Analogical Abduction for ------
+[-[p1,[a],[b]]]
+
+******** No rules are useful, Analogy fails.
+
+-- The single unresolvable subgoal. is :
+[[-[p1,[a],[b]]],[-[p2,[a]]],[-[p3,[a]]]]

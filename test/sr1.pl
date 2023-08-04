@@ -4,10 +4,10 @@
 theoryName(sr1).
 
 
-axiom([+mum2(q(diana),q(william),q(birth))]).
-axiom([+mum(q(camilla),q(william),q(birth))]).
+axiom([+mum(diana,william,bye)]).
+axiom([+mum(camilla,william,bye)]).
 
-trueSet([mum(q(diana),q(william),q(birth))]).
+trueSet([mum(diana,william,birth)]).
 falseSet([]).
 protect([]).
 heuristics([]).

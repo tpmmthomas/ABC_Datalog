@@ -1,0 +1,44 @@
+1, [[[arityInc(mum,-[mum,vble(x),vble(y)],[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],+[mum,[anna],[victor]],[+[mum,[anna],[victor]]])],[delete([+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y),[dummy_Abnormal1]],-[mum,vble(z),vble(y),[dummy_Abnormal1]]]),deleArg(mum,3)]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y),[dummy_Abnormal1]],-[mum,vble(z),vble(y),[dummy_Abnormal1]]],[+[mum,[anna],[victor],[dummy_Normal1]]],[+[mum,[lily],[tina],[dummy_Normal1]]],[+[mum,[lily],[victor],[dummy_Normal1]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[arityInc(mum,+[mum,[lily],[victor]],[+[mum,[lily],[victor]]],-[mum,vble(x),vble(y)],[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]])],[delete([+[mum,[lily],[victor],[dummy_Abnormal1]]]),deleArg(mum,3)]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y),[dummy_Normal1]],-[mum,vble(z),vble(y),[dummy_Normal1]]],[+[mum,[anna],[victor],[dummy_Normal1]]],[+[mum,[lily],[tina],[dummy_Normal1]]],[+[mum,[lily],[victor],[dummy_Abnormal1]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[arityInc(mum,+[mum,[anna],[victor]],[+[mum,[anna],[victor]]],-[mum,vble(x),vble(y)],[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]])],[delete([+[mum,[anna],[victor],[dummy_Abnormal1]]]),deleArg(mum,3)]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y),[dummy_Normal1]],-[mum,vble(z),vble(y),[dummy_Normal1]]],[+[mum,[anna],[victor],[dummy_Abnormal1]]],[+[mum,[lily],[tina],[dummy_Normal1]]],[+[mum,[lily],[victor],[dummy_Normal1]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[rename([victor],+[mum,[lily],[victor]],[+[mum,[lily],[victor]]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,[anna],[victor]]],[+[mum,[lily],[dummy_victor_1]]],[+[mum,[lily],[tina]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[rename([victor],+[mum,[anna],[victor]],[+[mum,[anna],[victor]]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,[anna],[dummy_victor_1]]],[+[mum,[lily],[tina]]],[+[mum,[lily],[victor]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[rename([lily],+[mum,[lily],[victor]],[+[mum,[lily],[victor]]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,[anna],[victor]]],[+[mum,[dummy_lily_1],[victor]]],[+[mum,[lily],[tina]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[rename([anna],+[mum,[anna],[victor]],[+[mum,[anna],[victor]]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,[dummy_anna_1],[victor]]],[+[mum,[lily],[tina]]],[+[mum,[lily],[victor]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[ass2rule([+[mum,[lily],[victor]]],[+[mum,[lily],vble(x)],-[eq,[anna],vble(x)]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,[anna],[victor]]],[+[mum,[lily],vble(x)],-[eq,[anna],vble(x)]],[+[mum,[lily],[tina]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[ass2rule([+[mum,[lily],[victor]]],[+[mum,[lily],vble(x)],-[eq,vble(x),[anna]]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,[anna],[victor]]],[+[mum,[lily],vble(x)],-[eq,vble(x),[anna]]],[+[mum,[lily],[tina]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[ass2rule([+[mum,[lily],[victor]]],[+[mum,[lily],vble(x)],-[\=,[victor],vble(x)]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,[anna],[victor]]],[+[mum,[lily],vble(x)],-[\=,[victor],vble(x)]],[+[mum,[lily],[tina]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[ass2rule([+[mum,[lily],[victor]]],[+[mum,vble(x),[victor]],-[eq,[anna],vble(x)]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,vble(x),[victor]],-[eq,[anna],vble(x)]],[+[mum,[anna],[victor]]],[+[mum,[lily],[tina]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[ass2rule([+[mum,[lily],[victor]]],[+[mum,vble(x),[victor]],-[eq,vble(x),[anna]]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,vble(x),[victor]],-[eq,vble(x),[anna]]],[+[mum,[anna],[victor]]],[+[mum,[lily],[tina]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[ass2rule([+[mum,[lily],[victor]]],[+[mum,vble(x),[victor]],-[\=,[lily],vble(x)]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,vble(x),[victor]],-[\=,[lily],vble(x)]],[+[mum,[anna],[victor]]],[+[mum,[lily],[tina]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[ass2rule([+[mum,[anna],[victor]]],[+[mum,[anna],vble(x)],-[eq,[lily],vble(x)]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,[anna],vble(x)],-[eq,[lily],vble(x)]],[+[mum,[lily],[tina]]],[+[mum,[lily],[victor]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[ass2rule([+[mum,[anna],[victor]]],[+[mum,[anna],vble(x)],-[eq,vble(x),[lily]]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,[anna],vble(x)],-[eq,vble(x),[lily]]],[+[mum,[lily],[tina]]],[+[mum,[lily],[victor]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[ass2rule([+[mum,[anna],[victor]]],[+[mum,vble(x),[victor]],-[eq,[lily],vble(x)]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,vble(x),[victor]],-[eq,[lily],vble(x)]],[+[mum,[lily],[tina]]],[+[mum,[lily],[victor]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[ass2rule([+[mum,[anna],[victor]]],[+[mum,vble(x),[victor]],-[eq,vble(x),[lily]]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,vble(x),[victor]],-[eq,vble(x),[lily]]],[+[mum,[lily],[tina]]],[+[mum,[lily],[victor]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[ass2rule([+[mum,[anna],[victor]]],[+[mum,vble(x),[victor]],-[\=,[anna],vble(x)]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,vble(x),[victor]],-[\=,[anna],vble(x)]],[+[mum,[lily],[tina]]],[+[mum,[lily],[victor]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[add_pre(-[dummyPred,vble(x),vble(z)],[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[dummyPred,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,[anna],[victor]]],[+[mum,[lily],[tina]]],[+[mum,[lily],[victor]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[delete([+[mum,[lily],[victor]]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,[anna],[victor]]],[+[mum,[lily],[tina]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[delete([+[mum,[anna],[victor]]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],[+[mum,[lily],[tina]]],[+[mum,[lily],[victor]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+
+1, [[[delete([+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]])],[]],[[[anna]],[[lily]],[[tina]],[[victor]]],[],[[+[mum,[anna],[victor]]],[+[mum,[lily],[tina]]],[+[mum,[lily],[victor]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]
+

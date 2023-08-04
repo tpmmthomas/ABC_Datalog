@@ -1,7 +1,8 @@
-:- working_directory(_, '../code').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
-theoryName(superPenguinh).
+
+
 
 axiom([-penguin(\x),+bird(\x)]).
 axiom([-bird(\x),+fly(\x)]).

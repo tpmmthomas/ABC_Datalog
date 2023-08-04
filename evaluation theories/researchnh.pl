@@ -1,7 +1,6 @@
-:- working_directory(_, '../code').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
-theoryName(researchnh).
 
 axiom([-activeReasercher(\x),+writes(\x, papers)]).
 axiom([-writes(\x, papers),+author(\x)]).

@@ -1,7 +1,5 @@
-:- working_directory(_, '../code').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
-
-theoryName(buyStockh).
 
 axiom([-goodPrice(\x),+buyStock(\x)]).
 axiom([-goodPrice(\x),-riskyCompany(\y),+dontBuyStock(\x)]).

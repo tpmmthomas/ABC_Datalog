@@ -1,0 +1,288 @@
+date(2023,8,4)
+----------------------------------------------------------------------------------
+Theory size: 4
+Faults Number: 0,2
+Cost Limit is: 50
+RoundLimit is: 0
+Running time: 294 ms.
+Heuristics applied:[]
+The protected item(s):[[arity(eq)],[eq]]
+Total Solution number is: 22
+Remaining semi-repaired theories: 0
+----------------------------------------------------------------------------------
+The original theory : 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(anna,victor)].
+[+mum(lily,tina)].
+[+mum(lily,victor)].
+
+The true set:
+[]
+The false set: 
+eq(anna,lily).
+eq(lily,anna).
+
+All of 22 sorted repair plans are from: 
+[delete([+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]])].
+[delete([+[mum,[anna],[victor]]])].
+[delete([+[mum,[lily],[victor]]])].
+[add_pre(-[dummyPred,vble(x),vble(z)],[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]])].
+[ass2rule([+[mum,[anna],[victor]]],[+[mum,vble(x),[victor]],-[\=,[anna],vble(x)]])].
+[ass2rule([+[mum,[anna],[victor]]],[+[mum,vble(x),[victor]],-[eq,vble(x),[lily]]])].
+[ass2rule([+[mum,[anna],[victor]]],[+[mum,vble(x),[victor]],-[eq,[lily],vble(x)]])].
+[ass2rule([+[mum,[anna],[victor]]],[+[mum,[anna],vble(x)],-[eq,vble(x),[lily]]])].
+[ass2rule([+[mum,[anna],[victor]]],[+[mum,[anna],vble(x)],-[eq,[lily],vble(x)]])].
+[ass2rule([+[mum,[lily],[victor]]],[+[mum,vble(x),[victor]],-[\=,[lily],vble(x)]])].
+[ass2rule([+[mum,[lily],[victor]]],[+[mum,vble(x),[victor]],-[eq,vble(x),[anna]]])].
+[ass2rule([+[mum,[lily],[victor]]],[+[mum,vble(x),[victor]],-[eq,[anna],vble(x)]])].
+[ass2rule([+[mum,[lily],[victor]]],[+[mum,[lily],vble(x)],-[\=,[victor],vble(x)]])].
+[ass2rule([+[mum,[lily],[victor]]],[+[mum,[lily],vble(x)],-[eq,vble(x),[anna]]])].
+[ass2rule([+[mum,[lily],[victor]]],[+[mum,[lily],vble(x)],-[eq,[anna],vble(x)]])].
+[rename([anna],+[mum,[anna],[victor]],[+[mum,[anna],[victor]]])].
+[rename([lily],+[mum,[lily],[victor]],[+[mum,[lily],[victor]]])].
+[rename([victor],+[mum,[anna],[victor]],[+[mum,[anna],[victor]]])].
+[rename([victor],+[mum,[lily],[victor]],[+[mum,[lily],[victor]]])].
+[arityInc(mum,+[mum,[anna],[victor]],[+[mum,[anna],[victor]]],-[mum,vble(x),vble(y)],[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]])].
+[arityInc(mum,+[mum,[lily],[victor]],[+[mum,[lily],[victor]]],-[mum,vble(x),vble(y)],[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]])].
+[arityInc(mum,-[mum,vble(x),vble(y)],[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],+[mum,[anna],[victor]],[+[mum,[anna],[victor]]])].
+
+------------------ Solution No. 1 as below------------------
+Repair plans found at Round 1/1 :
+add_pre(-dummyPred(\x,\z),[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-dummyPred(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(anna,victor)].
+[+mum(lily,tina)].
+[+mum(lily,victor)].
+
+------------------ Solution No. 2 as below------------------
+Repair plans found at Round 1/1 :
+ass2rule([+mum(anna,victor)],[+mum(\x,victor),- (anna\= \x)]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(\x,victor),- (anna\= \x)].
+[+mum(lily,tina)].
+[+mum(lily,victor)].
+
+------------------ Solution No. 3 as below------------------
+Repair plans found at Round 1/1 :
+ass2rule([+mum(lily,victor)],[+mum(\x,victor),- (lily\= \x)]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(\x,victor),- (lily\= \x)].
+[+mum(anna,victor)].
+[+mum(lily,tina)].
+
+------------------ Solution No. 4 as below------------------
+Repair plans found at Round 1/1 :
+ass2rule([+mum(lily,victor)],[+mum(\x,victor),-eq(\x,anna)]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(\x,victor),-eq(\x,anna)].
+[+mum(anna,victor)].
+[+mum(lily,tina)].
+
+------------------ Solution No. 5 as below------------------
+Repair plans found at Round 1/1 :
+ass2rule([+mum(anna,victor)],[+mum(\x,victor),-eq(\x,lily)]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(\x,victor),-eq(\x,lily)].
+[+mum(lily,tina)].
+[+mum(lily,victor)].
+
+------------------ Solution No. 6 as below------------------
+Repair plans found at Round 1/1 :
+ass2rule([+mum(lily,victor)],[+mum(\x,victor),-eq(anna,\x)]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(\x,victor),-eq(anna,\x)].
+[+mum(anna,victor)].
+[+mum(lily,tina)].
+
+------------------ Solution No. 7 as below------------------
+Repair plans found at Round 1/1 :
+ass2rule([+mum(anna,victor)],[+mum(\x,victor),-eq(lily,\x)]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(\x,victor),-eq(lily,\x)].
+[+mum(lily,tina)].
+[+mum(lily,victor)].
+
+------------------ Solution No. 8 as below------------------
+Repair plans found at Round 1/1 :
+ass2rule([+mum(anna,victor)],[+mum(anna,\x),-eq(\x,lily)]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(anna,\x),-eq(\x,lily)].
+[+mum(lily,tina)].
+[+mum(lily,victor)].
+
+------------------ Solution No. 9 as below------------------
+Repair plans found at Round 1/1 :
+ass2rule([+mum(anna,victor)],[+mum(anna,\x),-eq(lily,\x)]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(anna,\x),-eq(lily,\x)].
+[+mum(lily,tina)].
+[+mum(lily,victor)].
+
+------------------ Solution No. 10 as below------------------
+Repair plans found at Round 1/1 :
+rename([victor],+[mum,[anna],[victor]],[+[mum,[anna],[victor]]]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(anna,dummy_victor_1)].
+[+mum(lily,tina)].
+[+mum(lily,victor)].
+
+------------------ Solution No. 11 as below------------------
+Repair plans found at Round 1/1 :
+rename([lily],+[mum,[lily],[victor]],[+[mum,[lily],[victor]]]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(anna,victor)].
+[+mum(dummy_lily_1,victor)].
+[+mum(lily,tina)].
+
+------------------ Solution No. 12 as below------------------
+Repair plans found at Round 1/1 :
+ass2rule([+mum(lily,victor)],[+mum(lily,\x),- (victor\= \x)]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(anna,victor)].
+[+mum(lily,\x),- (victor\= \x)].
+[+mum(lily,tina)].
+
+------------------ Solution No. 13 as below------------------
+Repair plans found at Round 1/1 :
+ass2rule([+mum(lily,victor)],[+mum(lily,\x),-eq(\x,anna)]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(anna,victor)].
+[+mum(lily,\x),-eq(\x,anna)].
+[+mum(lily,tina)].
+
+------------------ Solution No. 14 as below------------------
+Repair plans found at Round 1/1 :
+ass2rule([+mum(lily,victor)],[+mum(lily,\x),-eq(anna,\x)]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(anna,victor)].
+[+mum(lily,\x),-eq(anna,\x)].
+[+mum(lily,tina)].
+
+------------------ Solution No. 15 as below------------------
+Repair plans found at Round 1/1 :
+rename([victor],+[mum,[lily],[victor]],[+[mum,[lily],[victor]]]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(anna,victor)].
+[+mum(lily,dummy_victor_1)].
+[+mum(lily,tina)].
+
+------------------ Solution No. 16 as below------------------
+Repair plans found at Round 1/1 :
+delete([+mum(lily,victor)]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(anna,victor)].
+[+mum(lily,tina)].
+
+------------------ Solution No. 17 as below------------------
+Repair plans found at Round 1/1 :
+rename([anna],+[mum,[anna],[victor]],[+[mum,[anna],[victor]]]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(dummy_anna_1,victor)].
+[+mum(lily,tina)].
+[+mum(lily,victor)].
+
+------------------ Solution No. 18 as below------------------
+Repair plans found at Round 1/1 :
+delete([+mum(anna,victor)]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)].
+[+mum(lily,tina)].
+[+mum(lily,victor)].
+
+------------------ Solution No. 19 as below------------------
+Repair plans found at Round 1/1 :
+arityInc(mum,-[mum,vble(x),vble(y)],[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]],+[mum,[anna],[victor]],[+[mum,[anna],[victor]]]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y,dummy_Abnormal1),-mum(\z,\y,dummy_Abnormal1)].
+[+mum(anna,victor,dummy_Normal1)].
+[+mum(lily,tina,dummy_Normal1)].
+[+mum(lily,victor,dummy_Normal1)].
+
+------------------ Solution No. 20 as below------------------
+Repair plans found at Round 1/1 :
+arityInc(mum,+[mum,[anna],[victor]],[+[mum,[anna],[victor]]],-[mum,vble(x),vble(y)],[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y,dummy_Normal1),-mum(\z,\y,dummy_Normal1)].
+[+mum(anna,victor,dummy_Abnormal1)].
+[+mum(lily,tina,dummy_Normal1)].
+[+mum(lily,victor,dummy_Normal1)].
+
+------------------ Solution No. 21 as below------------------
+Repair plans found at Round 1/1 :
+arityInc(mum,+[mum,[lily],[victor]],[+[mum,[lily],[victor]]],-[mum,vble(x),vble(y)],[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y)],-[mum,vble(z),vble(y)]]).
+
+
+Repaired Theory: 
+[+eq(\x,\z),-mum(\x,\y,dummy_Normal1),-mum(\z,\y,dummy_Normal1)].
+[+mum(anna,victor,dummy_Normal1)].
+[+mum(lily,tina,dummy_Normal1)].
+[+mum(lily,victor,dummy_Abnormal1)].
+
+------------------ Solution No. 22 as below------------------
+Repair plans found at Round 1/1 :
+delete([+eq(\x,\z),-mum(\x,\y),-mum(\z,\y)]).
+
+
+Repaired Theory: 
+[+mum(anna,victor)].
+[+mum(lily,tina)].
+[+mum(lily,victor)].
+
+Solutions are found at rounds:[1/1]

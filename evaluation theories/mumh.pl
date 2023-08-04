@@ -1,14 +1,13 @@
-:- working_directory(_, '../code').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
-theoryName(mumh).
 
 % Birth mother
 axiom([+mum(diana,william)]).
 % Step mother
 axiom([+mum(camilla,william)]).
 % Mother are unique
-axiom([-mum(\x,\z),-mum(\y,\z),+eq(\x,\y)]).
+    axiom([-mum(\x,\z),-mum(\y,\z),+eq(\x,\y)]).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,6 +19,3 @@ protect([eq,arity(eq),camilla, diana, william, prop(eq)]).
 heuristics([ noRuleChange, noAnalogy, noAxiomDele, noPrecDele,noAxiomAdd]).
 
 theoryFile:- pass.
-
-
-% working_directory(_, 'C:/Users/turtleburrito/Documents/GitHub/ABC_Datalog/evaluation theories').

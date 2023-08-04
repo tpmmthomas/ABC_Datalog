@@ -1,7 +1,6 @@
-:- working_directory(_, '../code').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
-theoryName(workingStudenth).
 
 axiom([+notworking(\x),-student(\x)]).
 axiom([-undstudent(\x),+adult(\x)]).

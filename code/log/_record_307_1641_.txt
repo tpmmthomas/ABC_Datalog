@@ -1,0 +1,138 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[australian,[bruce]]],[+[european,vble(x)],-[german,vble(x)]],[+[european,[lucy]]],[+[german,[lily]]],[+[swan,[bruce]]],[+[swan,[lily]]],[+[swan,[lucy]]],[+[white,vble(x)],-[swan,vble(x)]]]
+[+[australian,[bruce]]]
+[+[european,vble(x)],-[german,vble(x)]]
+[+[european,[lucy]]]
+[+[german,[lily]]]
+[+[swan,[bruce]]]
+[+[swan,[lily]]]
+[+[swan,[lucy]]]
+[+[white,vble(x)],-[swan,vble(x)]]
+
+
+---------SufGoals is------
+[([-[white,[lily]]],[[([-[white,[lily]]],[+[white,vble(x)],-[swan,vble(x)]],[[lily]/vble(x)],[-[swan,[lily]]],[0,0]),([-[swan,[lily]]],[+[swan,[lily]]],[],[],[0,0])]])]
+---------InsufGoals is------
+[]
+---------InComps are------
+[-[white,[bruce]]],[[([-[white,[bruce]]],[+[white,vble(x)],-[swan,vble(x)]],[[bruce]/vble(x)],[-[swan,[bruce]]],[0,0]),([-[swan,[bruce]]],[+[swan,[bruce]]],[],[],[0,0])]]
+
+---------Violations are------
+
+--------- Start repInsInc round: 1
+
+-------- Start blockProof1: -------- 
+[-[white,[bruce]]],[+[white,vble(x)],-[swan,vble(x)]],[[bruce]/vble(x)],[-[swan,[bruce]]],[0,0]
+[-[swan,[bruce]]],[+[swan,[bruce]]],[],[],[0,0]
+
+TheoryIn is: [[+[australian,[bruce]]],[+[european,vble(x)],-[german,vble(x)]],[+[european,[lucy]]],[+[german,[lily]]],[+[swan,[bruce]]],[+[swan,[lily]]],[+[swan,[lucy]]],[+[white,vble(x)],-[swan,vble(x)]]]
+
+[+[australian,[bruce]]]
+[+[european,vble(x)],-[german,vble(x)]]
+[+[european,[lucy]]]
+[+[german,[lily]]]
+[+[swan,[bruce]]]
+[+[swan,[lily]]]
+[+[swan,[lucy]]]
+[+[white,vble(x)],-[swan,vble(x)]]
+
+Original Axiom is: [+[white,vble(x)],-[swan,vble(x)]]
+
+-------- getAdjCond for  Rule: [+[white,vble(x)],-[swan,vble(x)]]
+
+ PreCands are: [australian,european,german]
+
+-------- start to find unprovable precondition candidates based on: australian
+-- The theorems of Predicate -australian-- are:
+[([+[australian,[bruce]]],[[([-[australian,[bruce]]],[+[australian,[bruce]]],[],[],[0,0])]])]
+Found TSAll for: australian
+[[+[australian,[bruce]]]]
+
+ upArg ArgsV is 
+[[bruce]]
+
+******** Warning: No adjustment precondition candidates found
+
+-------- start to find unprovable precondition candidates based on: european
+-- The theorems of Predicate -european-- are:
+[([+[european,[lily]]],[[([-[german,vble(x)],+[european,vble(x)]],[+[german,[lily]]],[],[+[european,[lily]]],[0,0])]]),([+[european,[lucy]]],[[([-[european,[lucy]]],[+[european,[lucy]]],[],[],[0,0])]])]
+Found TSAll for: european
+[[+[european,[lily]]],[+[european,[lucy]]]]
+
+ upArg ArgsV is 
+[vble(x)]
+
+-------- The adjustment precondition candidates:
+0,[european,vble(x)]
+
+-------- start to find unprovable precondition candidates based on: german
+-- The theorems of Predicate -german-- are:
+[([+[german,[lily]]],[[([-[german,[lily]]],[+[german,[lily]]],[],[],[0,0])]])]
+Found TSAll for: german
+[[+[german,[lily]]],[+[german,vble(x)]]]
+
+ upArg ArgsV is 
+[vble(x)]
+
+-------- The adjustment precondition candidates:
+0,[german,vble(x)]
+
+ Found unprovable precondition : add_pre(-[dummyPred,vble(x)],[+[white,vble(x)],-[swan,vble(x)]])
+
+ All found unprovable preconditions: [add_pre(-[dummyPred,vble(x)],[+[white,vble(x)],-[swan,vble(x)]]),add_pre(-[european,vble(x)],[+[white,vble(x)],-[swan,vble(x)]]),add_pre(-[german,vble(x)],[+[white,vble(x)],-[swan,vble(x)]])]
+
+Original Axiom is: [+[swan,[bruce]]]
+
+-------- start asser2rule to find unprovable precondition
+
+-- SuffGoals=[([-[white,[lily]]],[[([-[white,[lily]]],[+[white,vble(x)],-[swan,vble(x)]],[[lily]/vble(x)],[-[swan,[lily]]],[0,0]),([-[swan,[lily]]],[+[swan,[lily]]],[],[],[0,0])]])]
+
+-- Theory=[[+[australian,[bruce]]],[+[european,vble(x)],-[german,vble(x)]],[+[european,[lucy]]],[+[german,[lily]]],[+[swan,[bruce]]],[+[swan,[lily]]],[+[swan,[lucy]]],[+[white,vble(x)],-[swan,vble(x)]]]
+
+
+[+[australian,[bruce]]]
+[+[european,vble(x)],-[german,vble(x)]]
+[+[european,[lucy]]]
+[+[german,[lily]]]
+[+[swan,[bruce]]]
+[+[swan,[lily]]]
+[+[swan,[lucy]]]
+[+[white,vble(x)],-[swan,vble(x)]]
+
+-- The theorems of Predicate -swan-- are:
+[([+[swan,[lily]]],[[([-[swan,[lily]]],[+[swan,[lily]]],[],[],[0,0])]]),([+[swan,[lucy]]],[[([-[swan,[lucy]]],[+[swan,[lucy]]],[],[],[0,0])]])]
+-------- Start blockProof2: reformation -------- 
+-------- Proof is:
+[([-[white,[bruce]]],[+[white,vble(x)],-[swan,vble(x)]],[[bruce]/vble(x)],[-[swan,[bruce]]],[0,0]),([-[swan,[bruce]]],[+[swan,[bruce]]],[],[],[0,0])]
+
+
+-------- SuffGoals is:
+[([-[white,[lily]]],[[([-[white,[lily]]],[+[white,vble(x)],-[swan,vble(x)]],[[lily]/vble(x)],[-[swan,[lily]]],[0,0]),([-[swan,[lily]]],[+[swan,[lily]]],[],[],[0,0])]])]
+
+
+--Blocking Repair Plan11 InpClause:
+[+[white,vble(x)],-[swan,vble(x)]]
+
+weaken(vble(x),[lily],[+[white,vble(x)],-[swan,vble(x)]])
+
+--Blocking Repair Plan11 InpClause:
+[+[swan,[bruce]]]
+
+arityInc(swan,+[swan,[bruce]],[+[swan,[bruce]]],-[swan,vble(x)],[+[white,vble(x)],-[swan,vble(x)]])
+
+--Blocking Repair Plan11 InpClause:
+[+[swan,[bruce]]]
+
+rename([bruce],+[swan,[bruce]],[+[swan,[bruce]]])
+
+--Blocking Repair Plan11 InpClause:
+[+[white,vble(x)],-[swan,vble(x)]]
+
+weaken(vble(x),[lily],[+[white,vble(x)],-[swan,vble(x)]])
+
+--Blocking Repair Plan11 InpClause:
+[+[white,vble(x)],-[swan,vble(x)]]
+
+arityInc(swan,-[swan,vble(x)],[+[white,vble(x)],-[swan,vble(x)]],+[swan,[bruce]],[+[swan,[bruce]]])

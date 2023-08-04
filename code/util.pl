@@ -20,21 +20,13 @@ adverseEnum(N,List) :-
     Output: Theorems is a list of theorem whose argument contains the constant.
 **********************************************************************************************************************************/
 allTheoremsC(Abox, C, Theorems):-    % all theorems whose arguemnts contain C1
-  findall([+[P| Args]], (member([+[P| Args]], Abox), memberNested(C, Args)),
+  findall([+[P| Args]], (member([+[P| Args]], Abox), member(C, Args)),
         Theorems).
-
-% allConstraintsC(Abox, C, Theorems):-    % all theorems whose arguemnts contain C1
-%   findall([-[P| Args]], (member([-[P| Args]], Abox), memberNested(C, Args)),
-%         Theorems).
 
 % get all theorems that contain predicate P.
 allTheoremsP(Abox, P, Theorems):-    % all theorems whose arguemnts contain C1
   findall([+[P| Args]], member([+[P| Args]], Abox),
         Theorems).
-
-% allConstraintsP(Abox, P, Theorems):-    % all theorems whose arguemnts contain C1
-%   findall([-[P| Args]], member([-[P| Args]], Abox),
-%         Theorems).
 /**********************************************************************************************
     appAll(Predicate, List, ArgumentList, nth, Output):
         apply the predicate to one element in the List.
@@ -140,52 +132,21 @@ appProp(Prop, Predicate, PropNew):- !,
 argsMis([], [], [], []):- !.
 argsMis([A1| Args1], [A2| Args2], MisPairs, [MisPair1| MisPos2]):-
     argPairMis(A1, A2, Sigma, MisPair1),
-    extractNestedPairs(MisPair1,MisPair1Ex),
     subst(Sigma, Args1, ArgsSb1),
     subst(Sigma, Args2, ArgsSb2),
     argsMis(ArgsSb1, ArgsSb2, MisPairs2, MisPos2),
-    append(MisPair1Ex, MisPairs2, MisPairs).
+    append(MisPair1, MisPairs2, MisPairs).
 
 argPairMis(C, C, [],[]):- !.
-argPairMis(Y, vble(X), [], [occurs]):- 
-    is_func(Y),
-    memberNested(vble(X),Y),
-    !.
-argPairMis(vble(X), Y, [], [occurs]):- 
-    is_func(Y),
-    memberNested(vble(X),Y),
-    !.
-argPairMis(Y, vble(X), Y/vble(X), []):- (is_cons(Y);is_func(Y)), !.
-argPairMis(vble(X), Y, Y/vble(X), []):- (is_cons(Y);is_func(Y)),!.
+argPairMis([Cons], vble(X), [Cons]/vble(X), []):- !.
+argPairMis(vble(X), [Cons], [Cons]/vble(X), []):- !.
 argPairMis(vble(X), vble(Y), vble(X)/ vble(Y), []):-!.
 argPairMis([Cons1], [Cons2], [], [([Cons1], [Cons2])]):-
     Cons1 \= Cons2.
-argPairMis([Func1|F1Arg],[Func2|F2Arg],[],[([Func1|F1Arg], [Func2|F2Arg])]):- 
-    Func1 \= Func2.
-argPairMis([Func1|F1Arg],[Func1|F2Arg],Sigma, MisPair):- 
-    argsMisFunc([Func1|F1Arg],[Func1|F2Arg],Sigma,MisPair).
 
-argsMisFunc([],[],[],[]):- !.
-argsMisFunc([A1|Args1],[A2|Args2],Sigma,[MisPair1| MisPos2]):-
-    argPairMis(A1,A2,Sigma2,MisPair1),
-    subst(Sigma2, Args1, ArgsSb1),
-    subst(Sigma2, Args2, ArgsSb2),
-    argsMisFunc(ArgsSb1,ArgsSb2,SigmaR,MisPos2),
-    compose1(Sigma2,SigmaR,Sigma).
-    % append(MisPair1,MisPairsR,MisPairs).
-
-extractNestedPairs(L,Lout):-
-    findall((A,B),
-        memberNested((A,B),L),
-        Lout).
-
-% In FOL, an argument is either a constant, e.g., [c] or a variable, e.g., vble(v), or a function.
+% In datalog, an argument is either a constant, e.g., [c] or a variable, e.g., vble(v).
 is_cons(X):- X = [Y], atomic(Y).
-is_func(X):- X = [P | Rest],!, length(Rest,LRest), LRest > 0, P \= vble(_).
-arg(X):- is_cons(X),!.
-arg(X):- X = vble(_),!.
-arg(X):- is_func(X),!.
-
+arg(X):- is_cons(X); X = vble(_).
 
 % Assertion protect check
 asserProCheck([_|_],_):- !. % for rules, pass.
@@ -209,7 +170,7 @@ compose1(Sub, SublistIn, SublistOut) :-     % Append new substitution
     sort(SubTem, SublistOut).     % remove duplicates.
 
 /**********************************************************************************************************************
-    convertClause(In, Clause): convert input axiom into CNF form with head at the front and body in the end.
+    convertClause(In, Clause): convert input axiom into Horn clause form with head at the front and body in the end.
     Input:    In is an input axiom
     Output: Clause is a Horn clause.
         For reducing the search space of resolution, the Clause has its head at the front and body in the end.
@@ -218,9 +179,6 @@ convertClause(AxiomIn, Clause) :-
     appEach(AxiomIn, [appLiteral, convert],  Clause1),
     sort(Clause1, Clause).        % Remove duplicate literals and sort literals where positive literal will be the head of Clause.
 
-convertEq(AxiomIn,Clause) :-
-    appEach(AxiomIn,[appProp,convert], Clause1),
-    sort(Clause1,Clause).
 
 %% convert(In,Out): convert normal Prolog syntax to internal representation or
 %% vice versa.
@@ -294,21 +252,20 @@ deleteAll(ListsInput, [H|T], ListOut):-
     deleteAll(ListRest, T, ListOut).
 
 % succeed if ArgsG and ArgsT can be unified by ignoring the tail of the longer argument list.
-
 diff(ArgsG, ArgsT, ArgsTail):-
     length(ArgsG, LG),
     length(ArgsT, LT),
     (LG = LT-> ArgsTail = [], !,
         unification(ArgsG, ArgsT,_,[],_,_,[]);
-    LG > LT-> choose(LT,ArgsG,GFront),deleteAll(ArgsG,GFront,ArgsTail),%split_at(LT, ArgsG, GFront, ArgsTail), !,
+    LG > LT-> split_at(LT, ArgsG, GFront, ArgsTail), !,
         unification(GFront, ArgsT,_,[],_,_,[]);
-    LT > LG-> choose(LG,ArgsT,TFront),deleteAll(ArgsT,TFront,ArgsTail),%split_at(LG, ArgsT, TFront, ArgsTail),
+    LT > LG-> split_at(LG, ArgsT, TFront, ArgsTail),
         unification(ArgsG, TFront,_,[],_,_,[])).
 
 % drop the last element from the input list
 dropTail(ListIn, ListOut):-
-    length(ListIn, L), M is L-1,
-    split_at(M, ListIn, ListOut, _).
+length(ListIn, L), M is L-1,
+split_at(M, ListIn, ListOut, _).
 
 /**********************************************************************************************************************
 costRepairs (R, C): calculate the cost C by split R into members one by one.
@@ -409,18 +366,17 @@ essSubs([], _, []).
 
 % if there is one proof which does not contain Rule, then Rule is not essential for this sufficiency.
 essSubs([(_,Proofs)|Rest], Rule, SubsOut):-
-    setof(Proof, (member(Proof, Proofs),
-                notin((_,Rule,_,_,_), Proof)),
-            [_|_]), !,
-    essSubs(Rest, Rule, SubsOut).        % continue checking the next.
-
+setof(Proof, (member(Proof, Proofs),
+               notin((_,Rule,_,_,_), Proof)),
+         [_|_]), !,
+essSubs(Rest, Rule, SubsOut).        % continue checking the next.
 % Otherwise, record the substitutions of Rule in these proofs where it is essential.
 essSubs([(_,Proofs)|Rest], Rule, SubsOut):-
-    findall(Subs, (    member(Proof, Proofs),
-                    member((_,Rule,Subs,_,_), Proof)),
-            AllSubs),
-    essSubs(Rest, Rule, SubsRest),        % continue checking the next.
-    append(AllSubs, SubsRest, SubsOut).
+findall(Subs, (    member(Proof, Proofs),
+                 member((_,Rule,Subs,_,_), Proof)),
+         AllSubs),
+essSubs(Rest, Rule, SubsRest),        % continue checking the next.
+append(AllSubs, SubsRest, SubsOut).
 
 notEss2suff([], _).
 notEss2suff([(_,Proofs)|Rest], Axiom):-
@@ -453,14 +409,6 @@ generalise(ClauseIn, ClauseOut, Cons2Vbles, ReSubs):-
             member(Constant, ArgB1),
             member(Constant, ArgB2)),
            Cons2),
-    % get the list of constants which occur at least twice in the head.
-   findall(Constant,
-           (member(+[P1| ArgB1], ClauseIn),
-            member(+[P2| ArgB2], ClauseIn),
-            [P1| ArgB1] \= [P2| ArgB2],
-            member(Constant, ArgB1),
-            member(Constant, ArgB2)),
-           Cons3),
    % get the list of variables in the input clause.
    findall(X,
            ( (member(+[P1| Arg], ClauseIn);
@@ -468,8 +416,7 @@ generalise(ClauseIn, ClauseOut, Cons2Vbles, ReSubs):-
              member(vble(X), Arg)),
            AvoidList),
    % combine all constant candidates and remove the duplicates by sort them.
-   append(Cons1, Cons2, ConsT),
-   append(ConsT,Cons3,Cons),
+   append(Cons1, Cons2, Cons),
    sort(Cons, ConsList),
    getNewVble(ConsList, AvoidList, Cons2Vbles, ReSubs),
    appEach(ClauseIn, [appLiteral, [replaceS, 1, Cons2Vbles]],  ClauseOut).
@@ -579,18 +526,15 @@ negate([],[]).
     When vble(X) occur in the argument list Args, rename it with a new name which does not occur in Args.
 ***********************************************************************************************************************/
 newVble(vble(X), Args, vble(NewX)):-
-    memberNested(vble(X), Args),
+    member(vble(X), Args),
     string_concat(X,'1',Y),
     term_string(Term, Y),
-    (nestedNotin(vble(Term), Args)->NewX = Term, !;
+    (notin(vble(Term), Args)->NewX = Term, !;
      newVble(vble(Term), Args, vble(NewX))).
 
 /**********************************************************************************************************************
     check existances.
 ***********************************************************************************************************************/
-
-nestedNotin(_,List):- \+is_list(List), nl,print('ERROR: '), pause, print(List), print(' is not a list'),nl,fail,!.
-nestedNotin(X,List):- \+memberNested(X,List), !.
 
 notin(_, List):- \+is_list(List), nl,print('ERROR: '), pause, print(List), print(' is not a list'),nl,fail,!.
 notin(X, List):- \+member(X, List), !.
@@ -911,8 +855,8 @@ rewriteVble(_, [], [], []):- !.
 rewriteVble(Goals, InputClause, ClNew, AllSubs):-
     % generate substitutions which replace old variable vble(X) with its new name vble(NewX).
     findall(vble(NewX)/vble(X),
-            (member([_|Args], Goals),
-             memberNested(vble(X), Args),
+            (member(-[_|Args], Goals),
+             member(vble(X), Args),
              member(Literal, InputClause),
              ( Literal = -[_| ArgsInCl];
                Literal = +[_| ArgsInCl]),
@@ -949,12 +893,11 @@ subst([Subst|Substs], E,NE) :- subst(Subst,E,NE1), subst(Substs,NE1,NE), !.
 subst(_,[],[]) :-!.                          % If E1 is empty problem then do nothing
 subst([],E,E) :-!.
 subst(C/C, E, E):- arg(C), !.
-subst(D/C, C, D):- arg(C), arg(D),  !.
 
 %subst(Subst,[F|Args1],[F|Args2]) :-
   % atomic(F), maplist(subst(Subst),Args1,Args2),!. % If E1 is compound then recurse on args.
 subst(Subst,[E1=E2|Tl],[NE1=NE2|NTl]) :-       % If E1 is unification problem then
-  subst(Subst,E1,NE1), subst(Subst,E2,NE2),   % apply substitution to both sides
+   subst(Subst,E1,NE1), subst(Subst,E2,NE2),   % apply substitution to both sides
    subst(Subst,Tl,NTl),!.                        % then recurse on tails
 
 subst(Subst,[+E|T],[+NE|NT]) :-         % for substituting resolution ready clauses
@@ -978,7 +921,7 @@ subst(Subst, [Els1|T], [Els2|TSub]) :-
 % only substitute a constant, which is a list of one element, or a variable, which is vble(X).
 subst(_/C, Y, Y):- %arg(C), arg(Y),
     Y \= C, !.
-
+subst(D/C, C, D):- arg(C), arg(D),  !.
 
 /**********************************************************************************************
    based on transpose from clpfd: https://github.com/SWI-Prolog/swipl-devel/blob/master/library/clp/clpfd.pl#L6371
@@ -1090,200 +1033,3 @@ cterm(F, [Axiom| RestAxioms], NumIn, NumOut):-
     length(PRest, L2),
     NumNew is L1 - L2 + NumIn,
     cterm(F, RestAxioms, NumNew, NumOut).
-
-
-
-/********************************************
-addAncestor: combine new goals (ancestors) with theory.
-*******************************************/
-addAncestor(Theory,[],Theory). %If no derivation, just output the theory.
-addAncestor(Theory,[Head|Rest],Out):-
-    Head = (_,_,_,NewGoal,_),
-    is_list(NewGoal),
-    NewGoal = [],
-    addAncestor(Theory,Rest,Out).
-addAncestor(Theory,[Head|Rest],Out):-
-    Head = (_,_,_,NewGoal,_),
-    is_list(NewGoal),
-    NewGoal \= [],
-    append(Theory,[NewGoal],TheoryNew),
-    addAncestor(TheoryNew,Rest,Out).
-
-/********************************************
-findClause: find the clause in theoryl.
-reorderClause: make target the first clause in the list.
-*******************************************/
-findClause(Target,[H|_],H):-
-    member(Target,H),
-    length(H,X),
-    X > 1.
-findClause(Target,[_|R],Out):-
-    findClause(Target,R,Out).
-
-reorderClause(Target,[H|R],[H|R]):-
-    Target = H,!.
-
-reorderClause(Target,[H|R],Out):-
-    Target \= H,
-    append(R,[H],NewL),
-    reorderClause(Target,NewL,Out).
-
-
-memberNested(Elem,List):-
-    member(Elem,List).
-
-memberNested(Elem,[H|_]):-
-    is_list(H),
-    memberNested(Elem,H).
-
-memberNested(Elem,[_|R]):-
-    member([_|_],R),
-    memberNested(Elem,R).
-
-memberNested(_,[]):- fail.
-
-occursCheck(X,Funclist):-
-    \+memberNested(vble(X), Funclist),!.
-
-noTautology(Goals):-
-    findall(Pred,
-        (
-            X = -[Pred|Arg],
-            Y = +[Pred|Arg2],
-            member(X,Goals),
-            member(Y,Goals),
-            Arg == Arg2
-        )
-        ,Preds),
-    length(Preds,0).
-
-checkEq([]).
-checkEq([H|R]):-
-    is_list(H),
-    length(H,2),
-    H = [A,B],
-    is_cons_or_func(A),
-    is_cons_or_func(B),
-    checkEq(R).
-
-is_cons_or_func(A):-
-    is_cons(A).
-
-is_cons_or_func(A):-
-    is_func(A).
-
-
-notLastEQ([],_).
-notLastEQ(L,_):-
-    last(L,Concern),
-    Concern = (_,AxiomIn,_,_,_),
-    AxiomIn \= [eqAxiom|_].
-notLastEQ(L,EQ):-
-    last(L,Concern),
-    Concern = (_,AxiomIn,_,_,_),
-    AxiomIn = [eqAxiom,_|T],
-    T \= EQ. %Use the built-in unification since it is all constants.
-
-
-sortGoals(Goals,GoalsOut):-
-    removeDuplicates(Goals,[],GoalsSorted), %sort AND removed duplicates.
-    sepFuncNonfunc(GoalsSorted,[],[],NonFuncGoals,FuncGoals),
-    append(NonFuncGoals,FuncGoals,GoalsOut).
-
-sepFuncNonfunc([],X,Y,X,Y). %Finished
-
-sepFuncNonfunc([H|R],TNFGoals,TFGoals,NFGoals,FGoals):-
-    hasFunc(H),
-    append(TFGoals,[H],NewTFGoals),
-    sepFuncNonfunc(R,TNFGoals,NewTFGoals,NFGoals,FGoals).
-
-sepFuncNonfunc([H|R],TNFGoals,TFGoals,NFGoals,FGoals):-
-    \+hasFunc(H),
-    append(TNFGoals,[H],NewTNFGoals),
-    sepFuncNonfunc(R,NewTNFGoals,TFGoals,NFGoals,FGoals).
-
-hasFunc(Goal):-
-    member(Goal,[+[P|Args],-[P|Args]]),
-    member([_,_|_],Args).
-
-removeDuplicates([],_,[]):-!.
-
-removeDuplicates([H|T],Current,[H|T2]):-
-    \+member(H,Current),!,
-    append(Current,[H],Current2),
-    removeDuplicates(T,Current2,T2).
-
-removeDuplicates([H|T],Current,T2):-
-    member(H,Current),!,
-    removeDuplicates(T,Current,T2).
-
-% Finding ancestor from deriv list
-findAncestor(Deriv,IC,Deriv):-
-    last(Deriv, CurDerStep),
-    CurDerStep = (_,_,_,IC,_),!.
-
-findAncestor(Deriv,IC,NewDeriv):-
-    dropTail(Deriv,Ances),
-    findAncestor(Ances,IC,NewDeriv).
-
-addSameSign(+_,Y,+Y):- !.
-addSameSign(-_,Y,-Y):- !.
-
-addOpSign(+_,Y,-Y):- !.
-addOpSign(-_,Y,+Y):- !.
-
-isOpSign(+_,-_).
-isOpSign(-_,+_).
-
-
-% TraceBackClause: Find back the original clause that introduced IC (in the case where IC is the ancestor.)
-traceBackClause(IC,[],_,IC):- !.
-
-traceBackClause(IC,_,TheoryIn,IC):-
-    member(IC,TheoryIn),
-    !.
-
-traceBackClause(IC,Deriv,TheoryIn,OrgClause):-
-    last(Deriv, (_,OrgClause,_,IC,_)),
-    member(OrgClause,TheoryIn),
-    !.
-
-traceBackClause(IC,Deriv,TheoryIn,OrgClause):-
-    removeLast(Deriv,DerivNew),
-    traceBackClause(IC,DerivNew,TheoryIn,OrgClause).
-
-removeLast([_],[]).
-removeLast([L|R],[L|Removed]):-
-    removeLast(R,Removed).
-
-takeout(X,[X|R],R).  
-takeout(X,[F |R],[F|S]) :- takeout(X,R,S).
-
-perm([X|Y],Z) :- perm(Y,W), takeout(X,Z,W).  
-perm([],[]).
-
-choose(1, [H|_], [H]).
-choose(N, [H|TL], [H|ST]) :- Less1 is N - 1, choose(Less1, TL, ST).
-choose(N, [_|T], L) :- choose(N, T, L).
-
-containsC(Const,Props):-
-    member(Prop,Props),
-    prop(Prop,UProp),
-    memberNested(Const,UProp).
-
-nestedDelete(List,Item,OutList,DelPos):-
-    nestedDeleteHelper(0,List,Item,[],OutList,[],DelPos).
-
-nestedDeleteHelper(_,[],_,OutList,OutList,DelPos,DelPos):- !.
-nestedDeleteHelper(Pos,[H|R],Item,CurList,OutList,CurDelPos,DelPos):-
-    memberNested(Item,[H]), %The item to be deleted is included, do not append
-    !,
-    append(CurDelPos,[Pos],CurDelPosNew),
-    PosNew is Pos + 1,
-    nestedDeleteHelper(PosNew,R,Item,CurList,OutList,CurDelPosNew,DelPos).
-nestedDeleteHelper(Pos,[H|R],Item,CurList,OutList,CurDelPos,DelPos):-
-    \+memberNested(Item,[H]), %The item to be deleted is not included
-    !,
-    append(CurList,[H],CurListNew),
-    PosNew is Pos + 1,
-    nestedDeleteHelper(PosNew,R,Item,CurListNew,OutList,CurDelPos,DelPos).

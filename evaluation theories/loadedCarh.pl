@@ -1,7 +1,8 @@
-:- working_directory(_, '../code').
+
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
-theoryName(loadedCarh).
+
 
 axiom([+hasCar(car1)]).
 axiom([+hasLoad(car1,load1)]).

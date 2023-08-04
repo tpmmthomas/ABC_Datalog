@@ -1,0 +1,48 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y),vble(w)],-[mum,vble(z),vble(y),vble(w)]],[+[mum,[anna],[victor],[step]]],[+[mum,[lily],[tina],[birth]]],[+[mum,[lily],[victor],[step]]]]
+[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y),vble(w)],-[mum,vble(z),vble(y),vble(w)]]
+[+[mum,[anna],[victor],[step]]]
+[+[mum,[lily],[tina],[birth]]]
+[+[mum,[lily],[victor],[step]]]
+
+
+---------SufGoals is------
+[]
+---------InsufGoals is------
+[]
+---------InComps are------
+
+---------Violations are------
+
+--------------AllRepStates: [fault-free,0,[[[],[]],[[[anna]],[[birth]],[[lily]],[[step]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y),vble(w)],-[mum,vble(z),vble(y),vble(w)]],[+[mum,[anna],[victor],[step]]],[+[mum,[lily],[tina],[birth]]],[+[mum,[lily],[victor],[step]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]]
+
+
+--------------executation time 2---
+time takes
+1
+
+------------- AllRepStates -------------
+[fault-free,0,[[[],[]],[[[anna]],[[birth]],[[lily]],[[step]],[[tina]],[[victor]]],[],[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y),vble(w)],-[mum,vble(z),vble(y),vble(w)]],[+[mum,[anna],[victor],[step]]],[+[mum,[lily],[tina],[birth]]],[+[mum,[lily],[victor],[step]]]],[],[[+[eq,[anna],[lily]]],[+[eq,[lily],[anna]]]]]]
+
+
+
+
+------------- TASS -------------
+FullyNumRaw is: 1
+FullyNum is: 1
+
+
+[[+[eq,vble(x),vble(z)],-[mum,vble(x),vble(y),vble(w)],-[mum,vble(z),vble(y),vble(w)]],[+[mum,[anna],[victor],[step]]],[+[mum,[lily],[tina],[birth]]],[+[mum,[lily],[victor],[step]]]]
+
+
+
+------------- TBSS -------------
+SemiNumRaw is: 0
+SemiNum is: 0
+
+
+
+
+

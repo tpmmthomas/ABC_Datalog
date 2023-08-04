@@ -1,0 +1,45 @@
+
+---------Start detInsInc, Input theory is:------
+
+[[+[mum,[camilla],[william],[bye]]],[+[mum,[diana],[william],[bye]]]]
+[+[mum,[camilla],[william],[bye]]]
+[+[mum,[diana],[william],[bye]]]
+
+
+---------SufGoals is------
+[]
+---------InsufGoals is------
+[([-[mum,[diana],[william],[birth]]],[[([-[mum,[diana],[william],[birth]]],[],[],[-[mum,[diana],[william],[birth]]],[0,0])]])]
+---------InComps are------
+
+---------Violations are------
+
+--------- Start repInsInc round: 1
+
+--------Start unblocking 1 based on evidences  ------
+
+-- Unresolvables and ProofCur is :
+[-[mum,[diana],[william],[birth]]]
+[([-[mum,[diana],[william],[birth]]],[],[],[-[mum,[diana],[william],[birth]]],[0,0])]
+
+--Deleting unprovable preconditions:
+[-[mum,[diana],[william],[birth]]]
+
+--Reformation: Unresolvables:
+[-[mum,[diana],[william],[birth]]]
+
+Reformation: targeted evidence
+[mum,[diana],[william],[birth]]
+--------Reformation Candidates------
+[([+[mum,[camilla],[william],[bye]]],[+[mum,[camilla],[william],[bye]]],[([diana],[camilla]),([birth],[bye])],2,[[([diana],[camilla])],[],[([birth],[bye])]],[([+[mum,[camilla],[william],[bye]]],[],[],[+[mum,[camilla],[william],[bye]]],[0,0])]),([+[mum,[diana],[william],[bye]]],[+[mum,[diana],[william],[bye]]],[([birth],[bye])],1,[[],[],[([birth],[bye])]],[([+[mum,[diana],[william],[bye]]],[],[],[+[mum,[diana],[william],[bye]]],[0,0])])]
+---------------Axiom is 1  [+[mum,[camilla],[william],[bye]]]
+---------------Mismatches is 1  [([diana],[camilla]),([birth],[bye])]
+--renameArgs: Mismatches:
+[([diana],[camilla]),([birth],[bye])]
+[[arity(mum)],[mum]]
+
+---------------Axiom is 1  [+[mum,[diana],[william],[bye]]]
+---------------Mismatches is 1  [([birth],[bye])]
+--renameArgs: Mismatches:
+[([birth],[bye])]
+[[arity(mum)],[mum]]

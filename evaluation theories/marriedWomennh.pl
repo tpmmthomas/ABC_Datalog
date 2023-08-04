@@ -1,7 +1,6 @@
-:- working_directory(_, '../code').
+:- working_directory(_, '/Users/lixue/GoogleDrive/publish/ACS/code').
 :-[main].
 
-theoryName(marriedWomennh).
 
 axiom([-hadHusband(\x),+marriedWoman(\x)]).
 axiom([-marriedWoman(\x),+notDivorced(\x)]).
