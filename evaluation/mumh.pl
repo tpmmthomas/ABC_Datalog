@@ -2,7 +2,6 @@
 :-[main].
 
 logic(datalog).
-
 theoryName(mumh).
 
 % Birth mother
