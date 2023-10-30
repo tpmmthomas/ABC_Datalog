@@ -174,7 +174,8 @@ detInsInc(TheoryState,FaultState):-
     %   write_term_c('---------Violations are------'),nl, write_term_All(Violations),nl,
     %   write_term_c('-----end---------'),nl,nl,
     % Find all problems regarding the true rules
-    findall(RulesInsuff,
+    retractall(spec(avoids(_))),assert(spec(avoids([]))),
+    findall([RuleSuff,RuleInSuff],
         (
             member(TR, TrueRules),%One of the rule
             member(-[Pre|Args], TR), %The negative literal in the rule
@@ -187,14 +188,37 @@ detInsInc(TheoryState,FaultState):-
             combineSubs([],Pf,Subs),% Combine all substitution for original Goal 
             member(+[Pred2|Args2],TR),%Get the positive Goal
             subst(Subs,Args2,ArgsSubst),%Apply the substitution
-            %Remove functions and replace with new variables
-            ConsGoal = [-[Pred2|ArgsSubst]],
-            RulesInsuff = []
+            spec(avoids(AvoidListOld)),
+            append(Theory,[[-[Pre|Args]]],AvoidList1),
+            append(AvoidList1,[[+[Pred2|Args2]]],AvoidList),%Add the literals to the avoid list
+            findall(X,
+            (   member(Cl,AvoidList),
+                (member(+[_| Arg], Cl);
+                member(-[_| Arg], Cl)),
+                memberNested(vble(X), Arg)),
+            AvoidVbles), %Get all the variables in the avoid list
+            append(AvoidListOld,AvoidVbles,AvoidVblesNew),
+            sort(AvoidVblesNew,AvoidVblesSorted),
+            retractall(spec(avoids(_))),assert(spec(avoids(AvoidVblesSorted))),
+            removeFunc(ArgsSubst,ArgsFinal),%Remove functions and replace with new variables
+            ConsGoal = [-[Pred2|ArgsFinal]],
+            findall( [Proof, Evidence],
+                     (slRL(ConsGoal, Theory, EC, Proof, Evidence, [])),
+                     Proofs1T),
+            sort(Proofs1T,Proofs1),
+            transposeF(Proofs1, [Proofs, Evis]),
+            (Proofs = []-> RuleSuff = [], RuleInSuff = (ConsGoal, Evis);
+               Proofs = [_|_]-> RuleSuff = (ConsGoal,Proofs), RuleInSuff=[])
             %This time find all the proofs that fail for that goal
         ),
     TrueRuleProblems),
+    transposeF(TrueRuleProblems, [Suffs2, InSuffs2]),
+    append(Suffs,Suffs2,Suffs3),
+    append(InSuffs,InSuffs2,InSuffs3),
+    % print(InSuffs3),nl,halt,
+    %If there are problem, then add to Insuffs
     append(InComps, Violations, Unwanted),
-    FaultState = (Suffs, InSuffs, Unwanted).
+    FaultState = (Suffs3, InSuffs3, Unwanted).
 /**********************************************************************************************************************
     repInsInc(TheoryState, Layer, FaultState, TheoryRep):
             return a repaired theory w.r.t. one fault among the FaultStates by applying an Parento optimal repair.

@@ -1595,3 +1595,14 @@ getAllRepsFault([[_,(RepPlan,_),_]|R],[RepPlan|R2]):-
 addListtoList([],[]).
 addListtoList([H|R],[[H]|R2]):-
     addListtoList(R,R2).
+
+removeFunc([],[]).
+removeFunc([H|R],[vble(NewVble)|R2]):-
+    is_func(H),!, 
+    spec(avoids(AvoidVbles)),
+    getNewVble([a], AvoidVbles, [(a, vble(NewVble))], _),
+    append([NewVble],AvoidVbles,AvoidVblesNew),
+    retractall(spec(avoids(_))),assert(spec(avoids(AvoidVblesNew))),
+    removeFunc(R,R2).
+removeFunc([H|R],[H|R2]):-
+    removeFunc(R,R2).
