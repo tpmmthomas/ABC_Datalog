@@ -11,7 +11,7 @@ axiom([+producer(x1,p1)]).
 axiom([+driver(a1,x1)]).
 axiom([+accident(x1,b1)]).
 
-axiom([+human(\y)]).
+axiom([+human(a2)]).
 axiom([+human(b2)]).
 axiom([+car(x2,nonauto)]).
 axiom([+producer(x2,p2)]).
@@ -22,7 +22,7 @@ axiom([-accident(\x,\b),-driver(\a,\x),+checkInjury(\a,\b)]).
 axiom([-driver(\a,\x),+legalLiable(\a,\x)]).
 
 trueSet([checkInjury(a1,b1),checkInjury(a2,b2),legalLiable(a2,x2),legalLiable(p1,x1)]).
-% trueRules([[-accident(\c,\d),+legalLiable(f(\c,\d),\c)]]).
+trueRules([[-accident(\c,\d),+legalLiable(f(\c,\d),\c)]]).
 falseSet([legalLiable(a1,x1),legalLiable(p2,x2)]).
 
 % for all accidents, there is at least one who is the legal reliable.
