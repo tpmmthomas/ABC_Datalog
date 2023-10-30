@@ -208,6 +208,14 @@ compose1(Sub, SublistIn, SublistOut) :-     % Append new substitution
      Sub = _/_-> SubTem = [Sub|SublistMid]),
     sort(SubTem, SublistOut).     % remove duplicates.
 
+combineSubs(CurSubOut,[],CurSubOut).
+combineSubs([],[(_,_,Sub,_,_)|T],CurSubOut):-
+    combineSubs(Sub,T,CurSubOut).
+combineSubs(Subs,[(_,_,Sub,_,_)|T],CurSubOut):-
+    Subs \= [],
+    compose1(Sub,Subs,SubsOut),
+    combineSubs(SubsOut,T,CurSubOut).
+
 /**********************************************************************************************************************
     convertClause(In, Clause): convert input axiom into CNF form with head at the front and body in the end.
     Input:    In is an input axiom

@@ -14,7 +14,7 @@ Date: 19.02.2020
                    EqClasses: equal classes. An equal class is a list of equal constants.
                    Inequality Set: a list of constants which are unequal to each other based on UNAE.
 ***********************************************************************************************************************/
-initTheoryNew(Theory,EQs):-
+initTheoryNew(Theory):-
     specification,
     % Convert each clause to internal representation convention.
     % Notice that only the ones within [] is a clause, others could be heuristics, e.g., axiom(una).
@@ -44,9 +44,18 @@ initTheoryNew(Theory,EQs):-
             eqAxiom(Axiom),
             convertEq(Axiom,ClOut2)
         ),EQRaw),
-    print(EQRaw),nl,
     (EQRaw = [[]] -> EQs = []; sort(EQRaw,EQs)),
     checkEq(EQs),
+    findall(ClRulesOut,
+        (
+            trueRules(Rules),
+            member(Rule,Rules),
+            convertClause(Rule,ClRules),
+            orderAxiom(ClRules,ClRulesOut)
+        ),TrueRules),
+    assert(spec(equalities(EQs))),
+    assert(spec(trueRules(TrueRules))),
+    % print(TrueRules),nl,halt,
     % ==========================
     %% CHECK OF ORPHAN VARIABNLES ARE REMOVED.
     % appEach(Theory, [orphanVb], Ophans),  % Check if there are Orphans
@@ -83,6 +92,7 @@ supplyInput:-
     (\+falseSet(_)-> assert(falseSet([])),!;true),
     (\+heuristics(_)-> assert(heuristics([])),!;true),
     (\+protect(_)-> assert(protect([])),!;true),
+    (\+current_predicate(trueRules/1)-> assert(trueRules([])),!;true),
     (\+current_predicate(eqAxiom/1)-> assert(eqAxiom([])),!;true).
 /**********************************************************************************************
     precheckPS: check if the preferred structure is self-conflicting.

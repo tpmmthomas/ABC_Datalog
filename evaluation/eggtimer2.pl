@@ -2,7 +2,6 @@
 :-[main].
 
 logic(fol).
-
 theoryName(eggtimer2).
 
 axiom([+meet(v1,l1,l2)]).

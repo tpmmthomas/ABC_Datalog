@@ -120,8 +120,8 @@ slRL(Goal, TheoryIn, EC, Proof, Evidence, Theorem):-!,
     % write_term_c("cost limit is "), write_term_c(RCostLimit),nl,
     sortGoals(GoalNew,GoalNewSorted),
     slRLMain(GoalNewSorted, [], TheoryIn, EQs, EC, ProofTem, EvidenceTem, Theorem, RCostLimit),
-    % write_term_c("-----end slRL---------"),nl,
-    cleanSubMid(ProofTem, Proof),
+    % cleanSubMid(ProofTem, Proof),
+    Proof = ProofTem, %Keep the mid substitutions as we need it now
     cleanSubMid(EvidenceTem, Evidence),
     retractall(spec(proofNum(X))), assert(spec(proofNum(X+1))).
 
@@ -457,7 +457,8 @@ updateDeriv(Deriv, reorder, DerivNew):-
 
 updateDeriv(DerivIn, ResStep, PredType, DerivOut):-
     ResStep = ((G, SubG), (InputClause, SubCl), GoalsNew, Num),
-    CurrentStep = (G, InputClause, SubCl, GoalsNew, Num),
+    (DerivIn = [] -> append(SubG,SubCl,SubsNew); SubsNew = SubCl), %TODO added: make sure the original substs are here. Check if ok.
+    CurrentStep = (G, InputClause, SubsNew, GoalsNew, Num),
     reverse(DerivIn, Deriv1),      % the update will start from the last InputClause.
     pairSub(G, SubG, GSPairs),    % get the list of pairs between a sub-goal and its new substitutions.
     updateOldCls(Deriv1, GSPairs, PredType, Deriv2),

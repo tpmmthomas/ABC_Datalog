@@ -26,8 +26,7 @@ main :-
     % Initialisation
     supplyInput, %OK: This simply inits the PS if they are not present.
     % Initialision: the theory, the preferred structure, the signature, the protected items and Equality Class and Inequality Set.
-    initTheoryNew(Theory,EQs),    % clear previous data and initialise new ones.
-    assert(spec(equalities(EQs))),
+    initTheoryNew(Theory),    % clear previous data and initialise new ones.
     precheckPS, %TODO check how constraint axioms need to be handled - any changes?
     % setup log
     initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH),
@@ -107,8 +106,9 @@ detInsInc(TheoryState,FaultState):-
     % write_term_c("---------hello--------"),nl,
     TheoryState = [_, EC, _, Theory, TrueSetE, FalseSetE],
     spec(equalities(EQs)),
+    spec(trueRules(TrueRules)),
     writeLog([nl, write_term_c('---------Start detInsInc, Input theory is:------'), nl,
-    nl,write_term_c(Theory),nl,write_term_All(Theory),nl,nl, write_term_c('---------Equivalent classes are:------'),nl, write_term_All(EQs),finishLog]),
+    nl,write_term_c(Theory),nl,write_term_All(Theory),nl,nl, write_term_c('---------Equivalent classes are:------'),nl, write_term_All(EQs),nl,                                                                                                               write_term_c('---------True Rules are:------'),nl, write_term_All(TrueRules),finishLog]),
     % Find all proofs or failed proofs of each preferred proposition.
 
     % write_term_c('---------Start detInsInc, Input theory is:------'), nl,
@@ -173,6 +173,26 @@ detInsInc(TheoryState,FaultState):-
       writeLog([nl, write_term_c('---------Violations are------'),nl, write_term_All(Violations), finishLog]),
     %   write_term_c('---------Violations are------'),nl, write_term_All(Violations),nl,
     %   write_term_c('-----end---------'),nl,nl,
+    % Find all problems regarding the true rules
+    findall(RulesInsuff,
+        (
+            member(TR, TrueRules),%One of the rule
+            member(-[Pre|Args], TR), %The negative literal in the rule
+            Goal = [-[Pre|Args]], %The goal
+            retractall(spec(proofNum(_))), assert(spec(proofNum(0))),
+            findall(Proof,
+                    slRL(Goal, Theory, EC, Proof, [], []),
+                    ProofT), % List of Subst for precondition
+            member(Pf, ProofT), %Get 1 member for the substitution
+            combineSubs([],Pf,Subs),% Combine all substitution for original Goal 
+            member(+[Pred2|Args2],TR),%Get the positive Goal
+            subst(Subs,Args2,ArgsSubst),%Apply the substitution
+            %Remove functions and replace with new variables
+            ConsGoal = [-[Pred2|ArgsSubst]],
+            RulesInsuff = []
+            %This time find all the proofs that fail for that goal
+        ),
+    TrueRuleProblems),
     append(InComps, Violations, Unwanted),
     FaultState = (Suffs, InSuffs, Unwanted).
 /**********************************************************************************************************************
