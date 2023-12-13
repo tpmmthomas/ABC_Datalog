@@ -2,7 +2,7 @@
 
 The ABC system is a domain-independent system for repairing faulty Datalog-like theories by combining three existing techniques: abduction, belief revision and conceptual change. Accordingly, it is named the ABC repair system (ABC). Given an observed assertion and a current theory, abduction adds axioms, or deletes preconditions, which explain that observation by making the corresponding assertion derivable from the expanded theory. Belief revision incorporates a new piece of information which conflicts with the input theory by deleting old axioms. Conceptual change uses the reformation algorithm for blocking unwanted proofs or unblocking wanted proofs. The former two techniques change an axiom as a whole, while reformation changes the language in which the theory is written. These three techniques are complementary. But they have not previously been combined into one system. We align these three techniques in ABC, which is capable of repairing logical theories with better result than each individual technique alone.
 
-## Desciptions of ABC SystemS
+## Desciptions of ABC System
 
 This repository contains two implementations of the ABC system, namely ABC_Datalog and ABC_FOL. ABC_Datalog is the original implementation of the ABC system, which is based on Datalog. ABC_FOL is the extension of ABC_Datalog, which is based on First-Order Logic (FOL).  
 
@@ -46,3 +46,15 @@ true.
 ```
 
 Step3. Call predicate _abc._ The output files include _abc_..._faultFree.txt_ which contains the repair solutions; _abc_..._record.txt_ which has the log information of ABC's procedure, and _abc_..._repNum.txt_ which is the pruned sub-optimal.
+
+## Prover9 installation
+
+Please refer to the [Prover9 website](https://www.cs.unm.edu/~mccune/) for installation.
+A very interesting problem while installation: there will be an error
+
+```bash
+/usr/bin/ld: search.o: in function `search':
+search.c:(.text+0x670b): undefined reference to `round'
+```
+
+To fix this, you must go to the directory `LADR-2009-11A\provers.src` and edit the file `Makefile` by rearranging `-lm` to the end of the line. Then run `make all` again.
