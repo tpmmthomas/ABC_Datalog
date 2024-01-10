@@ -46,3 +46,17 @@ true.
 ```
 
 Step3. Call predicate _abc._ The output files include _abc_..._faultFree.txt_ which contains the repair solutions; _abc_..._record.txt_ which has the log information of ABC's procedure, and _abc_..._repNum.txt_ which is the pruned sub-optimal.
+
+## Heuristics
+
+- noAssAdd: no assersion will be added.
+- noAxiomAdd: no axiom will be added, which equal to noAssAdd + no rules to be added. 
+- noAxiomDele: no axiom will be deleted.
+- noPrecAdd: no precondition will be added to a rule.
+- noPrecDele: no precondition will be deleted from a rule.
+- noRuleChange: no repairs on rule changes.
+- noAss2Rule: no assertion being repaired into a rule (An assertion will become a rule by being added a precondition)
+- noCon2Rule: tbd
+- noReform: no reformation repairs.
+- noAnalogy: no rules will be produced based on the analogy algorithm.
+- noRename: no rename a predicate/constant
