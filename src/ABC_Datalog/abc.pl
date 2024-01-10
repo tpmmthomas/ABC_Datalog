@@ -22,7 +22,8 @@ proofStatus:  0 -- default value.
 %:-spy(pause).
 pause.
 
-main :-
+% if there is any rules in the ps
+main:-
         current_predicate(exists_true, 1),
         exists_true(ET),
         ET \= [],
@@ -36,6 +37,11 @@ main :-
         precheckPS,
 
         spec(signature(_, Constants)), % Constants = [[camilla], [diana], [william]]
+
+        fileName('faultFree', Fname1, 'json'),
+        open(Fname1, write, Stream1),
+        outputJsonFirst(Stream1),
+
         findall( Clause_New,
                 (
                  % replace the variable with a constant
@@ -63,28 +69,38 @@ main :-
                  assert(spec(pft(TrueSetNew))),
                  assert(outputFile_No_Last(OutputFile_No)),
 
-                 abc_core(Theory, OutputFile_No)),
-        _).
+                 abc_core(Theory, AllRepStates, ExecutionTime),
+                 outputJsonSecond(Stream1, AllRepStates, ExecutionTime, OutputFile_No)),
+        _),
+        write(Stream1, ']}'),
+        close(Stream1).
 
 
-main :-
-         % Initialisation
+main:-
+        % Initialisation
         supplyInput,
         % Initialision: the theory, the preferred structure, the signature, the protected items and Equality Class and Inequality Set.
         initTheory(Theory),    % clear previous data and initialise new ones.
         precheckPS,
-        abc_core(Theory,"1").
+        fileName('faultFree', Fname1, 'json'),
+        open(Fname1, write, Stream1),
+        outputJsonFirst(Stream1),
+        abc_core(Theory, AllRepStates, ExecutionTime),
+        outputJsonSecond(Stream1, AllRepStates, ExecutionTime, "1"),
+        write(Stream1, ']}'),
+        close(Stream1).
 
-abc_core(Theory, OutputFile_No):-
+
+abc_core(Theory, AllRepStates, ExecutionTime):-
     % setup log
-    print('ok'),
-    initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH),
+    initLogFiles(StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH, 'txt'),
     %statistics(walltime, [_ | [ExecutionTime1]]),
     statistics(walltime, [S,_]),
 
     % writeLog([nl,write_term_c('--------------executation time 1---'), nl,write_term_c('time takes'),nl, write_term_c(ExecutionTime1),nl]),
     % repair process
     detRep(Theory, AllRepStates),
+
     writeLog([nl,write_term_c('--------------AllRepStates: '),write_term_All(AllRepStates),nl, finishLog]),
 
     statistics(walltime, [E,_]),
@@ -93,7 +109,11 @@ abc_core(Theory, OutputFile_No):-
     writeLog([nl,write_term_c('--------------executation time 2---'),
                 nl,write_term_c('time takes'),nl, write_term_c(ExecutionTime),nl]),
     %ExecutionTime is ExecutionTime1 + ExecutionTime2,
-    output(AllRepStates, ExecutionTime, OutputFile_No),
+    output(AllRepStates, ExecutionTime),
+
+    open('ABC_Result.txt',write,Out),
+    write(Out,AllRepStates),
+    close(Out),
     maplist(close, [StreamRec, StreamRepNum, StreamRepTimeNH, StreamRepTimeH]),
     nl, print('-------------- Finish. --------------'), nl.
 
@@ -110,12 +130,12 @@ detRep(Theory, AllRepSolutions):-
             unaeMain(Theory,  OptimalUnae),
             member((TheoryState, InsufIncomp), OptimalUnae),
 
-            InsufIncomp = (_,INSUFF,ICOM),
+            InsufIncomp = (_,INSUFF,ICOM), % Insufficiency and Incompatibility faults here. 1. sufficiencies, 2. insufficienies, 3. incompatability
             length(INSUFF,InsuffNum),
             length(ICOM,IncompNum),
             assert(spec(faultsNum(InsuffNum, IncompNum))),
 
-             (InsufIncomp = (_,[],[])->
+             (InsufIncomp = (_,[],[])-> % if 2 and 3 are empty then it is fault free
                      TheoryRep = ([fault-free, 0, TheoryState]);    % if the theory is fault free.
              % Otherwise, repair all the faults and terminate with a fault-free theory or failure due to out of the costlimit.
               InsufIncomp \= (_,[],[])->
@@ -151,7 +171,7 @@ detRep(Theory, AllRepSolutions):-
                         InComps: the provable goals from pf(F).
 ************************************************************************************************************************/
 detInsInc(TheoryState, FaultState):-
-    TheoryState = [_, EC, _, Theory, TrueSetE, FalseSetE],
+    TheoryState = [RsRec, EC, _, Theory, TrueSetE, FalseSetE],
     writeLog([nl, write_term_c('---------Start detInsInc, Input theory is:------'), nl,
     nl,write_term_c(Theory),nl,write_term_All(Theory),nl,finishLog]),
     % Find all proofs or failed proofs of each preferred proposition.
@@ -163,6 +183,7 @@ detInsInc(TheoryState, FaultState):-
               Goal = [-[Pre| Args]],
 
               % Get all proofs and failed proofs of the goal.
+
               findall( [Proof, Evidence],
                      ( slRL(Goal, Theory, EC, Proof, Evidence, [])),
                      Proofs1),
@@ -187,7 +208,8 @@ detInsInc(TheoryState, FaultState):-
             % get all of a proof of Goal
             findall(Proof,
                     slRL(Goal, Theory, EC, Proof, [], []),
-                    UnwProofs),
+                    UnwProofsT),
+            sort(UnwProofsT,UnwProofs),    % get rid of duplicates.
             UnwProofs \= []),    % Detected incompatibility based on refutation.
            InComps),             % Find all incompatibilities.
 
@@ -203,7 +225,9 @@ detInsInc(TheoryState, FaultState):-
           Violations),
       writeLog([nl, write_term_c('---------Violations are------'),nl, write_term_All(Violations), finishLog]),
     append(InComps, Violations, Unwanted),
-    FaultState = (Suffs, InSuffs, Unwanted).
+    FaultState = (Suffs, InSuffs, Unwanted),
+    append(InSuffs, Unwanted, InitialAna),
+    (RsRec = [[],[]], InitialAna = [] -> print('The input theory is fault-free.'), !;true).
 /**********************************************************************************************************************
     repInsInc(TheoryState, Layer, FaultState, TheoryRep):
             return a repaired theory w.r.t. one fault among the FaultStates by applying an Parento optimal repair.
@@ -211,9 +235,9 @@ detInsInc(TheoryState, FaultState):-
                             for more information, please see unaeMain.
             FaultState = (Suffs, InSuffs, InComps), for more information, please see detInsInc.
             Layer: the layer of repInsInc.
-    Output: TheoryRep=[faulty/fault-free, Repairs, TheoryOut]
-            Repairs: the repairs which have been applied to achieving a fault-free theory.
-            TheoryOut: the fault-free theory which is formalised by applying Repairs to the input theory.
+    Output: [faulty/fault-free, Layer/N, TheoryStateOut]
+            Layer: The deapth of the search
+            N:
 ************************************************************************************************************************/
 % If there is no faults in the theory, terminate with the fault-free theory.
 repInsInc(TheoryState, Layer, (_, [], []), [fault-free, (Layer/N),  TheoryState]):-
@@ -226,7 +250,7 @@ repInsInc(TheoryState, Layer, (_, [], []), [fault-free, (Layer/N),  TheoryState]
     spec(roundNum(N)).%TheoryState = [[Repairs,_], _, _, TheoryRep, _, _], !.
 
 % If the cost limit is reached, terminate with failure.
-repInsInc(TheoryState, Layer, (_, Insuf, Incomp), [fault, (Layer/N), TheoryState]):-
+repInsInc(TheoryState, Layer, (_, Insuf, Incomp), [faulty, (Layer/N), TheoryState]):-
     TheoryState = [[Repairs,_], _, _, _, _, _],
     costRepairs(Repairs, Cost),
     spec(costLimit(CostLimit)),
@@ -284,7 +308,7 @@ repInsInc(TheoryStateIn, Layer, FaultStateIn, TheoryRep):-
     writeLog([nl, write_term_c('-- All faulty states: '), write_term_c(Length),nl,
                 write_term_All(AllRepStates), finishLog]),
 
-     % pruning the sub-optimal.
+    % pruning the sub-optimal.
     pareOpt(AllRepStates, Optimals1),
     length(Optimals1, LO1),
     writeLog([nl, write_term_c('--The number of Optimals: '), write_term_c(LO1), nl, write_term_All(Optimals1), finishLog]),
