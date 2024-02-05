@@ -221,7 +221,8 @@ convert(E,[F|NArgs]) :-                     % If E is input and compound then
 revert([],[]):- !.
 
 % X is a variable
-revert(vble(X),\X) :-  !.                     % revert a variable
+%revert(vble(X),\X) :-  !.                     % revert a variable
+revert(vble(X),vble(X)) :-  !.                     % revert a variable
 
 % A is a constant or number
 revert([A],A) :- !.                          % revert a constant and number
@@ -473,6 +474,24 @@ init(FileList, Variables, HeurPath):-
                      spec(protList(ProtectedList)),
                      spec(rsb(RsBanned)),
                      spec(rsa(RsList))]).
+
+
+/**********************************************************************************************************************
+   instantiate(Proposition, Constants, [], Substitution, PropositionGround): instantiate the proposition with the constants
+   Input:  Proposition to be grounded.
+           Constants in the signiture.
+   Output:    Substitution and PropositionGround: ground proposition
+***********************************************************************************************************************/
+instantiate([P|Args],_, Sub, Sub, [P|Args]):-
+    notin(vble(_), Args), !.
+instantiate([P|Args], Constants, SubIn, SubOut, Pgrounded):-
+    member(vble(X), Args),
+    member(C1, Constants),
+    SubTem = [ C1/vble(X)|SubIn],
+    % subst(V/E,E1,E2): E2 is the result of replacing E with V in E1.
+    subst(C1/vble(X), Args, AurgsNew),
+    instantiate([P|AurgsNew], Constants, SubTem, SubOut, Pgrounded).
+
 
 /**********************************************************************************************
    mergeTailSort(ListsInput, ListOut): combine all the tails without duplicates for a head in a list.
@@ -888,8 +907,8 @@ split(List, Ele, SubList1, SubList2):-
     append(SubList1,  SubList2, List),
     last(SubList1, Ele).
 /**********************************************************************************************
-
 % subst(V/E,E1,E2): E2 is the result of replacing E with V in E1.
+
 **********************************************************************************************/
 
 subst([Subst|Substs], E,NE) :- subst(Subst,E,NE1), subst(Substs,NE1,NE), !.
